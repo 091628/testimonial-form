@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portfolio Testimonial Template</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1a2e;
+    --paper: #faf9f6;
+    --accent: #2d6a4f;
+    --accent-light: #d8f3dc;
+    --muted: #6c757d;
+    --border: #dee2e6;
+    --card-bg: #ffffff;
+    --shadow: 0 4px 24px rgba(0,0,0,0.06);
+    --radius: 12px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Outfit', sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    min-height: 100vh;
+    padding: 40px 20px;
+    line-height: 1.6;
+  }
+
+  .container {
+    max-width: 780px;
+    margin: 0 auto;
+  }
+
+  /* Header */
+  .header {
+    text-align: center;
+    margin-bottom: 48px;
+    position: relative;
+  }
+
+  .header::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 3px;
+    background: var(--accent);
+    margin: 20px auto 0;
+    border-radius: 2px;
+  }
+
+  .header h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 2.4rem;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+  }
+
+  .header p {
+    font-size: 1rem;
+    color: var(--muted);
+    margin-top: 8px;
+    font-weight: 300;
+  }
+
+  /* Instructions banner */
+  .instructions {
+    background: var(--accent-light);
+    border-left: 4px solid var(--accent);
+    padding: 16px 20px;
+    border-radius: 0 var(--radius) var(--radius) 0;
+    margin-bottom: 36px;
+    font-size: 0.9rem;
+    color: #1b4332;
+  }
+
+  .instructions strong {
+    font-weight: 600;
+  }
+
+  /* Card */
+  .card {
+    background: var(--card-bg);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 40px;
+    margin-bottom: 28px;
+    border: 1px solid rgba(0,0,0,0.04);
+  }
+
+  .card-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.3rem;
+    margin-bottom: 24px;
+    color: var(--ink);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .card-title .icon {
+    width: 28px;
+    height: 28px;
+    background: var(--accent-light);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    flex-shrink: 0;
+  }
+
+  /* Form fields */
+  .field {
+    margin-bottom: 22px;
+  }
+
+  .field:last-child {
+    margin-bottom: 0;
+  }
+
+  .field label {
+    display: block;
+    font-size: 0.82rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+
+  .field input,
+  .field textarea,
+  .field select {
+    width: 100%;
+    font-family: 'Outfit', sans-serif;
+    font-size: 1rem;
+    padding: 12px 16px;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    background: var(--paper);
+    color: var(--ink);
+    transition: border-color 0.2s, box-shadow 0.2s;
+    outline: none;
+  }
+
+  .field input:focus,
+  .field textarea:focus,
+  .field select:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(45, 106, 79, 0.1);
+  }
+
+  .field textarea {
+    min-height: 140px;
+    resize: vertical;
+    line-height: 1.7;
+  }
+
+  .field input::placeholder,
+  .field textarea::placeholder {
+    color: #adb5bd;
+    font-weight: 300;
+  }
+
+  /* Row layout */
+  .row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+  }
+
+  /* Star rating */
+  .stars {
+    display: flex;
+    gap: 6px;
+    margin-top: 4px;
+  }
+
+  .star {
+    width: 36px;
+    height: 36px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    font-size: 28px;
+    color: var(--border);
+    transition: color 0.15s, transform 0.15s;
+    padding: 0;
+    line-height: 1;
+  }
+
+  .star:hover,
+  .star.active {
+    color: #f4b942;
+    transform: scale(1.15);
+  }
+
+  /* Photo upload area */
+  .photo-upload {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    border: 2px dashed var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    overflow: hidden;
+    transition: border-color 0.2s;
+    background: var(--paper);
+    position: relative;
+  }
+
+  .photo-upload:hover {
+    border-color: var(--accent);
+  }
+
+  .photo-upload img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .photo-upload .placeholder {
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.72rem;
+    line-height: 1.3;
+  }
+
+  .photo-upload .placeholder span {
+    font-size: 24px;
+    display: block;
+    margin-bottom: 2px;
+  }
+
+  .photo-row {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .photo-hint {
+    font-size: 0.82rem;
+    color: var(--muted);
+    font-weight: 300;
+  }
+
+  /* Divider */
+  .divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 28px 0;
+  }
+
+  /* Preview section */
+  .preview-toggle {
+    text-align: center;
+    margin: 36px 0 20px;
+  }
+
+  .preview-btn {
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 500;
+    padding: 14px 36px;
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+    letter-spacing: 0.02em;
+  }
+
+  .preview-btn:hover {
+    background: #245a42;
+    transform: translateY(-1px);
+  }
+
+  .preview-btn:active {
+    transform: translateY(0);
+  }
+
+  /* Preview card */
+  .preview-card {
+    display: none;
+    background: var(--card-bg);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 44px;
+    margin-top: 20px;
+    border: 1px solid rgba(0,0,0,0.04);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .preview-card.visible {
+    display: block;
+    animation: fadeUp 0.4s ease;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .preview-card::before {
+    content: '"';
+    position: absolute;
+    top: 16px;
+    left: 28px;
+    font-family: 'DM Serif Display', serif;
+    font-size: 6rem;
+    color: var(--accent-light);
+    line-height: 1;
+    pointer-events: none;
+  }
+
+  .preview-testimonial {
+    font-size: 1.15rem;
+    line-height: 1.8;
+    color: var(--ink);
+    font-weight: 300;
+    font-style: italic;
+    margin-bottom: 24px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .preview-author {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .preview-avatar {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: var(--accent-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.2rem;
+    color: var(--accent);
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+
+  .preview-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .preview-name {
+    font-weight: 600;
+    font-size: 1rem;
+  }
+
+  .preview-role {
+    font-size: 0.88rem;
+    color: var(--muted);
+    font-weight: 300;
+  }
+
+  .preview-stars {
+    margin-top: 4px;
+    font-size: 16px;
+    color: #f4b942;
+    letter-spacing: 2px;
+  }
+
+  .preview-date {
+    font-size: 0.78rem;
+    color: var(--muted);
+    margin-top: 4px;
+  }
+
+  .preview-label {
+    text-align: center;
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    margin-bottom: 12px;
+    font-weight: 500;
+  }
+
+  /* Copy button */
+  .copy-section {
+    text-align: center;
+    margin-top: 16px;
+    display: none;
+  }
+
+  .copy-section.visible {
+    display: block;
+  }
+
+  .copy-btn {
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 400;
+    padding: 10px 24px;
+    background: transparent;
+    color: var(--accent);
+    border: 1.5px solid var(--accent);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .copy-btn:hover {
+    background: var(--accent);
+    color: #fff;
+  }
+
+  /* Footer */
+  .footer {
+    text-align: center;
+    margin-top: 48px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+    font-size: 0.82rem;
+    color: var(--muted);
+    font-weight: 300;
+  }
+
+  @media (max-width: 600px) {
+    body { padding: 24px 16px; }
+    .card { padding: 28px 22px; }
+    .row { grid-template-columns: 1fr; }
+    .header h1 { font-size: 1.8rem; }
+    .preview-card { padding: 32px 24px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <div class="header">
+    <h1>Testimonial Template</h1>
+    <p>Please fill out the form below to provide your testimonial</p>
+  </div>
+
+  <div class="instructions">
+    <strong>Hi there!</strong> Please complete each section below with your honest feedback. Once done, click "Preview Testimonial" to see how it will appear on the portfolio. <strong>Your progress is auto-saved</strong> — you can close this page and come back later without losing anything. Thank you for taking the time!
+  </div>
+
+  <!-- Save status bar -->
+  <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; padding:0 4px;">
+    <span id="lastSaved" style="font-size:0.82rem; color:#6c757d; font-weight:300;">Not saved yet</span>
+    <button onclick="clearSavedData()" style="font-family:'Outfit',sans-serif; font-size:0.78rem; background:none; border:none; color:#dc3545; cursor:pointer; text-decoration:underline;">Clear saved data</button>
+  </div>
+
+  <!-- Reviewer Info -->
+  <div class="card">
+    <div class="card-title">
+      <div class="icon">1</div>
+      Your Information
+    </div>
+
+    <div class="photo-row">
+      <div class="photo-upload" id="photoUpload" onclick="document.getElementById('photoInput').click()">
+        <div class="placeholder" id="photoPlaceholder">
+          <span>+</span>
+          Photo
+        </div>
+        <img id="photoPreview" style="display:none" alt="Photo">
+      </div>
+      <input type="file" id="photoInput" accept="image/*" style="display:none">
+      <div class="photo-hint">Upload a headshot<br>(optional but recommended)</div>
+    </div>
+
+    <hr class="divider">
+
+    <div class="row">
+      <div class="field">
+        <label>Full Name</label>
+        <input type="text" id="fullName" placeholder="">
+      </div>
+      <div class="field">
+        <label>Job Title</label>
+        <input type="text" id="jobTitle" placeholder="">
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="field">
+        <label>Company</label>
+        <input type="text" id="company" placeholder="">
+      </div>
+      <div class="field">
+        <label>Working Relationship</label>
+        <select id="relationship">
+          <option value="">Select one...</option>
+          <option value="Direct Manager">Direct Manager / Supervisor</option>
+          <option value="Team Lead">Team Lead</option>
+          <option value="Colleague">Colleague</option>
+          <option value="Client">Client</option>
+          <option value="Business Partner">Business Partner</option>
+          <option value="Other">Other</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="field">
+      <label>How long have you worked together?</label>
+      <select id="duration">
+        <option value="">Select duration...</option>
+        <option value="Less than 6 months">Less than 6 months</option>
+        <option value="6–12 months">6–12 months</option>
+        <option value="1–2 years">1–2 years</option>
+        <option value="2–5 years">2–5 years</option>
+        <option value="5+ years">5+ years</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Rating -->
+  <div class="card">
+    <div class="card-title">
+      <div class="icon">2</div>
+      Overall Rating
+    </div>
+
+    <div class="field">
+      <label>How would you rate their work overall?</label>
+      <div class="stars" id="starRating">
+        <button class="star" data-value="1">★</button>
+        <button class="star" data-value="2">★</button>
+        <button class="star" data-value="3">★</button>
+        <button class="star" data-value="4">★</button>
+        <button class="star" data-value="5">★</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Testimonial -->
+  <div class="card">
+    <div class="card-title">
+      <div class="icon">3</div>
+      Your Testimonial
+    </div>
+
+    <div class="field">
+      <label>Main Testimonial</label>
+      <textarea id="mainTestimonial" placeholder="Share your experience working together. What stood out? What results did they deliver? What would you tell others about working with them?"></textarea>
+    </div>
+
+    <div class="row">
+      <div class="field">
+        <label>Top Strength</label>
+        <input type="text" id="strength" placeholder="e.g. Problem-solving, Reliability">
+      </div>
+      <div class="field">
+        <label>Key Project or Achievement</label>
+        <input type="text" id="project" placeholder="e.g. Led the CRM migration">
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Would you recommend them? (One sentence)</label>
+      <input type="text" id="recommend" placeholder="e.g. I'd hire them again in a heartbeat.">
+    </div>
+  </div>
+
+  <!-- Permission -->
+  <div class="card">
+    <div class="card-title">
+      <div class="icon">4</div>
+      Permission & Date
+    </div>
+
+    <div class="row">
+      <div class="field">
+        <label>Date</label>
+        <input type="date" id="testimDate">
+      </div>
+      <div class="field">
+        <label>Display Preference</label>
+        <select id="displayPref">
+          <option value="Full name & title">Full name & title</option>
+          <option value="First name & company only">First name & company only</option>
+          <option value="Anonymous">Anonymous</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <!-- Preview -->
+  <div class="preview-toggle">
+    <button class="preview-btn" onclick="generatePreview()">Preview Testimonial</button>
+  </div>
+
+  <div id="previewSection">
+    <div class="preview-label">— Preview —</div>
+    <div class="preview-card" id="previewCard">
+      <p class="preview-testimonial" id="previewText"></p>
+      <div class="preview-author">
+        <div class="preview-avatar" id="previewAvatar"></div>
+        <div>
+          <div class="preview-name" id="previewName"></div>
+          <div class="preview-role" id="previewRole"></div>
+          <div class="preview-stars" id="previewStars"></div>
+          <div class="preview-date" id="previewDate"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="copy-section" id="copySection">
+    <button class="copy-btn" onclick="copyTestimonial()">Copy Testimonial Text</button>
+    <button class="copy-btn" onclick="downloadTestimonial()" style="margin-left:10px;">Download as File</button>
+  </div>
+
+  <div class="footer">
+    Thank you for your testimonial — it means a lot!
+  </div>
+
+</div>
+
+<script>
+  // ========== AUTO-SAVE SYSTEM ==========
+  const SAVE_KEY = 'portfolio_testimonial_data';
+  const fields = ['fullName', 'jobTitle', 'company', 'relationship', 'duration', 'mainTestimonial', 'strength', 'project', 'recommend', 'testimDate', 'displayPref'];
+
+  function saveForm() {
+    const data = {};
+    fields.forEach(id => {
+      const el = document.getElementById(id);
+      if (el) data[id] = el.value;
+    });
+    data.rating = selectedRating;
+    data.photo = uploadedPhoto || null;
+    data.savedAt = new Date().toISOString();
+    try {
+      localStorage.setItem(SAVE_KEY, JSON.stringify(data));
+      showSaveIndicator();
+    } catch(e) {
+      console.log('Save failed', e);
+    }
+  }
+
+  function loadForm() {
+    try {
+      const raw = localStorage.getItem(SAVE_KEY);
+      if (!raw) return;
+      const data = JSON.parse(raw);
+      fields.forEach(id => {
+        const el = document.getElementById(id);
+        if (el && data[id]) el.value = data[id];
+      });
+      if (data.rating) {
+        selectedRating = data.rating;
+        document.querySelectorAll('.star').forEach((s, i) => {
+          s.classList.toggle('active', i < selectedRating);
+          s.style.color = i < selectedRating ? '#f4b942' : '';
+        });
+      }
+      if (data.photo) {
+        uploadedPhoto = data.photo;
+        const preview = document.getElementById('photoPreview');
+        preview.src = data.photo;
+        preview.style.display = 'block';
+        document.getElementById('photoPlaceholder').style.display = 'none';
+      }
+      if (data.savedAt) {
+        const d = new Date(data.savedAt);
+        document.getElementById('lastSaved').textContent = 'Last saved: ' + d.toLocaleString();
+      }
+    } catch(e) {
+      console.log('Load failed', e);
+    }
+  }
+
+  function showSaveIndicator() {
+    const el = document.getElementById('lastSaved');
+    el.textContent = 'Saved just now ✓';
+    el.style.color = '#2d6a4f';
+    setTimeout(() => { el.style.color = ''; }, 2000);
+  }
+
+  function clearSavedData() {
+    if (confirm('Are you sure you want to clear all saved data? This cannot be undone.')) {
+      localStorage.removeItem(SAVE_KEY);
+      location.reload();
+    }
+  }
+
+  // Auto-save on every input change (debounced)
+  let saveTimer;
+  function debouncedSave() {
+    clearTimeout(saveTimer);
+    saveTimer = setTimeout(saveForm, 800);
+  }
+
+  // Attach auto-save listeners after DOM is ready
+  fields.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.addEventListener('input', debouncedSave);
+    if (el) el.addEventListener('change', debouncedSave);
+  });
+
+  // ========== DOWNLOAD AS TEXT FILE ==========
+  function downloadTestimonial() {
+    const name = document.getElementById('fullName').value || '';
+    const title = document.getElementById('jobTitle').value || '';
+    const company = document.getElementById('company').value || '';
+    const testimonial = document.getElementById('mainTestimonial').value || '';
+    const strength = document.getElementById('strength').value || '';
+    const project = document.getElementById('project').value || '';
+    const recommend = document.getElementById('recommend').value || '';
+    const relationship = document.getElementById('relationship').value || '';
+    const duration = document.getElementById('duration').value || '';
+    const date = document.getElementById('testimDate').value || '';
+
+    let text = `PORTFOLIO TESTIMONIAL\n${'='.repeat(40)}\n\n`;
+    text += `"${testimonial}"\n\n`;
+    if (recommend) text += `${recommend}\n\n`;
+    text += `${'—'.repeat(20)}\n`;
+    text += `Name: ${name}\n`;
+    if (title) text += `Title: ${title}\n`;
+    if (company) text += `Company: ${company}\n`;
+    if (relationship) text += `Relationship: ${relationship}\n`;
+    if (duration) text += `Duration: ${duration}\n`;
+    if (strength) text += `Top Strength: ${strength}\n`;
+    if (project) text += `Key Achievement: ${project}\n`;
+    text += `Rating: ${'★'.repeat(selectedRating)}${'☆'.repeat(5 - selectedRating)}\n`;
+    if (date) text += `Date: ${date}\n`;
+
+    const blob = new Blob([text], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `testimonial-${name.replace(/\s+/g, '-').toLowerCase() || 'draft'}.txt`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  }
+
+  // Star rating
+  let selectedRating = 0;
+  document.querySelectorAll('.star').forEach(star => {
+    star.addEventListener('click', () => {
+      selectedRating = parseInt(star.dataset.value);
+      document.querySelectorAll('.star').forEach((s, i) => {
+        s.classList.toggle('active', i < selectedRating);
+      });
+      debouncedSave();
+    });
+    star.addEventListener('mouseenter', () => {
+      const val = parseInt(star.dataset.value);
+      document.querySelectorAll('.star').forEach((s, i) => {
+        s.style.color = i < val ? '#f4b942' : '';
+      });
+    });
+    star.addEventListener('mouseleave', () => {
+      document.querySelectorAll('.star').forEach((s, i) => {
+        s.style.color = s.classList.contains('active') ? '#f4b942' : '';
+      });
+    });
+  });
+
+  // Photo upload
+  let uploadedPhoto = null;
+  document.getElementById('photoInput').addEventListener('change', function(e) {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = function(ev) {
+        uploadedPhoto = ev.target.result;
+        const preview = document.getElementById('photoPreview');
+        preview.src = ev.target.result;
+        preview.style.display = 'block';
+        document.getElementById('photoPlaceholder').style.display = 'none';
+      };
+      reader.readAsDataURL(file);
+    }
+  });
+
+  // Set today's date as default
+  document.getElementById('testimDate').valueAsDate = new Date();
+
+  // Generate preview
+  function generatePreview() {
+    const name = document.getElementById('fullName').value || 'Your Name';
+    const title = document.getElementById('jobTitle').value || 'Job Title';
+    const company = document.getElementById('company').value || '';
+    const testimonial = document.getElementById('mainTestimonial').value || 'Your testimonial will appear here...';
+    const date = document.getElementById('testimDate').value;
+    const recommend = document.getElementById('recommend').value;
+
+    let fullText = '"' + testimonial + '"';
+    if (recommend) fullText += ' — ' + recommend;
+
+    document.getElementById('previewText').textContent = fullText;
+    document.getElementById('previewName').textContent = name;
+    document.getElementById('previewRole').textContent = title + (company ? ', ' + company : '');
+
+    // Avatar
+    const avatarEl = document.getElementById('previewAvatar');
+    if (uploadedPhoto) {
+      avatarEl.innerHTML = '<img src="' + uploadedPhoto + '" alt="Photo">';
+    } else {
+      const initials = name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
+      avatarEl.textContent = initials;
+    }
+
+    // Stars
+    document.getElementById('previewStars').textContent = '★'.repeat(selectedRating) + '☆'.repeat(5 - selectedRating);
+
+    // Date
+    if (date) {
+      const d = new Date(date + 'T00:00:00');
+      document.getElementById('previewDate').textContent = d.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+    }
+
+    document.getElementById('previewCard').classList.add('visible');
+    document.getElementById('copySection').classList.add('visible');
+    document.getElementById('previewCard').scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+
+  // Copy testimonial
+  function copyTestimonial() {
+    const name = document.getElementById('fullName').value || '';
+    const title = document.getElementById('jobTitle').value || '';
+    const company = document.getElementById('company').value || '';
+    const testimonial = document.getElementById('mainTestimonial').value || '';
+    const strength = document.getElementById('strength').value || '';
+    const project = document.getElementById('project').value || '';
+    const recommend = document.getElementById('recommend').value || '';
+    const relationship = document.getElementById('relationship').value || '';
+    const duration = document.getElementById('duration').value || '';
+
+    let text = `TESTIMONIAL\n\n`;
+    text += `"${testimonial}"\n\n`;
+    if (recommend) text += `${recommend}\n\n`;
+    text += `— ${name}`;
+    if (title) text += `, ${title}`;
+    if (company) text += ` at ${company}`;
+    text += `\n`;
+    if (relationship) text += `Relationship: ${relationship}\n`;
+    if (duration) text += `Duration: ${duration}\n`;
+    if (strength) text += `Top Strength: ${strength}\n`;
+    if (project) text += `Key Achievement: ${project}\n`;
+    text += `Rating: ${'★'.repeat(selectedRating)}${'☆'.repeat(5 - selectedRating)}`;
+
+    navigator.clipboard.writeText(text).then(() => {
+      const btn = document.querySelector('.copy-btn');
+      btn.textContent = 'Copied!';
+      setTimeout(() => btn.textContent = 'Copy Testimonial Text', 2000);
+    });
+  }
+
+  // Load saved data when page opens
+  loadForm();
+</script>
+
+</body>
+</html>
